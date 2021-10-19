@@ -1,4 +1,4 @@
-## STEP 2: DOWNLOAD ALL DATA FROM SRA
+## STEP 2: DOWNLOAD ALL DATA FROM SRA AND GET QUALITY INFORMATION
 # the conda environment used in this script is available from biostarhandbook.com
 
 
