@@ -49,7 +49,7 @@ echo "done!"
 
 ## Put it together
 
-Here's what the whole script looks like (this is [get-runinfo.sh](get-runinfo.sh)
+Here's what the whole script looks like (this is [get-runinfo.sh](get-runinfo.sh))
 
 ```
 # activate the conda environment
