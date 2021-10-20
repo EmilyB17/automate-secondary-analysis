@@ -85,3 +85,25 @@ Here's what a job submission script might look like! Can you tell what each line
 conda activate r_env
 Rscript my-script.R
 ```
+
+### Get it running
+
+To submit your job to the job scheduler, use `qsub`:
+```
+# you can submit a PBS script
+qsub MYJOB.pbs
+
+# or a shell script
+qsub MYJOB.sh
+```
+
+After you submit the job use `qstat` to check in on the status:
+```
+qstat -u YOURUSERNAME
+```
+
+Or, use `qstat` to get information about the job once it's running:
+```
+qstat -f JOBID
+```
+
