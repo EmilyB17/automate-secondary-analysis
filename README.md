@@ -25,7 +25,7 @@ I like to use the **Run Selector** webpage. Spend a few minutes poking around; w
 
 ## Log onto ROAR
 
-1. Log onto [PSU's Open OnDemand website](PORTAL.ACI.ICS.PSU.EDU) and log in with your PSU username and password.  
+1. Log onto [PSU's Open OnDemand website](portal.aci.ics.psu.edu) and log in with your PSU username and password.  
 2. Start a session and choose our environment (PENDING)
 3. Launch the session (it may take a few minutes)
 
