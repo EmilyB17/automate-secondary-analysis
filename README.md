@@ -96,7 +96,7 @@ RAWDIR=~/scratch/seq-workshop2021/rawreads
 
 To test our connection, we will download 1,000 "spots" (reads) from one file using `fastq-dump`:
 ```
-cat runids_$ACC.txt | head -1 | parallel /gpfs/group/RISE/sw7/anaconda/anaconda3/envs/bioinfo/bin/fastq-dump -X 1000 --split-files --outdir #RAWDIR {}
+cat runids_$ACC.txt | head -1 | parallel /gpfs/group/RISE/sw7/anaconda/anaconda3/envs/seq-sra/bin/fastq-dump -X 1000 --split-files --outdir $RAWDIR {}
 ```
 *Note: GNU parallel and conda don't play nicely together. It will force you to include the path to the software executable*
 
@@ -124,7 +124,7 @@ For today's workshop we'll download 5 full-sized files using similar code:
 cd ..
 
 # download data
-cat runids_$ACC.txt | head -5 | parallel /gpfs/group/RISE/sw7/anaconda/anaconda3/envs/bioinfo/bin/fastq-dump --split-files --outdir #RAWDIR {}
+cat runids_$ACC.txt | head -5 | parallel /gpfs/group/RISE/sw7/anaconda/anaconda3/envs/seq-sra/bin/fastq-dump --split-files --outdir $RAWDIR {}
 ```
 
 # Do basic quality checks
