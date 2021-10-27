@@ -19,7 +19,7 @@ This workshop was made possible by Dr. Jasna Kovac, the fall 2021 workshop coord
 
 Today, we will use data from a 2018 *Nature Medicine* paper, [Gut microbiota and FXR mediate the clinical benefits of metformin](https://www.nature.com/articles/s41591-018-0222-4). Navigate to the online version of this paper and search for the accession code to their shotgun metagenomics data. (You should see the accession number: PRJNA486795)
 
-Copy the accession number into the search bar for NCBI's [Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra). If the data was uploaded correctly (which from personal experience, is easier said than done!) a webpage will appear that looks like this: 
+Copy the accession number into the search bar for NCBI's [Sequence Read Archive](https://www.ncbi.nlm.nih.gov/sra). If the data was uploaded correctly (which from personal experience, is easier said than done!) a webpage will appear listing the uploaded data with information.
 
 I like to use the **Run Selector** webpage. Spend a few minutes poking around; what kind of information is available on this page?
 
@@ -61,12 +61,10 @@ Next, use `esearch` and `efetch` to find and download the Run Information into a
 esearch -db sra -query $ACC | efetch -format runinfo > runinfo.csv
 ```
 
-Runinfo.csv contains a lot of information. We can copy it over to our local machines to look at it in spreadsheet format like Excel. *Note: if you work on Windows you will need to download a Linux subshell, so skip this step for now*
+Runinfo.csv contains a lot of information. We can copy it over to our local machines to look at it in spreadsheet format like Excel. There are two options to view the file:
+1. Download the file from your ACI ICDS portal. Click the "Files" tab, then your scratch directory. Navigate to the file and click "download".
+2. Run `scp` or `rsync` from **your local terminal**: `scp YOURUSERNAME@submit.aci.ics.psu.edu:~/seq-workshop2021/runinfo.csv ~/Downloads`. This copies the file from ROAR to your local machine. *Note: if you work on Windows you will need to download a Linux subshell, so skip this step for now*
 
-**Run this code from your local terminal***
-```
-scp YOURUSERNAME@submit.aci.ics.psu.edu:~/seq-workshop2021/runinfo.csv ~/Downloads
-```
 
 There are 44 samples in this dataset. To avoid running into problems down the road, we want to get a list of the exact sample ID's that we want. These are called "Runs" in SRA. 
 ```
@@ -88,6 +86,7 @@ Finally, we are ready for the fun part! Now that we have (1) an accession number
 
 First, let's make a directory to write our files into. To make our lives easier and avoid typo errors, we'll save the directory path to a variable.
 ```
+# make a directory
 mkdir -p ~/scratch/seq-workshop2021/rawreads
 
 # save the path to a variable
@@ -118,13 +117,13 @@ Sanity check: let's get to know our data. `seqkit stat` from the [seqkit](https:
 seqkit stat FILE_1.fastq
 ```
 
-For today's workshop we'll download 5 full-sized files using similar code:
+For today's workshop we'll download 3 full-sized files using similar code:
 ```
 # move back one directory
 cd ..
 
 # download data
-cat runids_$ACC.txt | head -5 | parallel /gpfs/group/RISE/sw7/anaconda/anaconda3/envs/seq-sra/bin/fastq-dump --split-files --outdir $RAWDIR {}
+cat runids_$ACC.txt | head -3 | parallel /gpfs/group/RISE/sw7/anaconda/anaconda3/envs/seq-sra/bin/fastq-dump --split-files --outdir $RAWDIR {}
 ```
 
 # Do basic quality checks
@@ -135,10 +134,10 @@ We're working with someone else's data, so let's take some time to get to know e
 ls -lh $RAWDIR
 
 # print the first 20 lines of a file
-cat FILE_1.fastq | head -20
+cat $RAWDIR/FILE_1.fastq | head -20
 
 # print the last 20 lines of a file
-cat FILE_1.fastq | tail -20
+cat $RAWDIR/FILE_1.fastq | tail -20
 
 # run seqkit stat on all files
 seqkit stat $RAWDIR/*.fastq
@@ -174,15 +173,12 @@ MultiQC is easy to run: you point it to the directory with all FastQC output fil
 multiqc $QUALDIR -o . -n multiqc_$ACC
 ```
 
-We're working on a secure cluster so we need to move the HTML report to a local machine to view in a web browser.
-**RUN ON YOUR LOCAL TERMINAL (Windows users, skip this step)*
-```
-# copy to your local machine
-scp YOURUSERNAME@submit.aci.ics.psu.edu:~/scratch/seq-workshop2021/multiqc_PRJNA486795.html ~/Downloads
+We're working on a secure cluster so we need to open the HTML file on a local browser. Like before, we have two options:
+1. Download the file from your ACI ICDS portal. Click the "Files" tab, then your scratch directory. Navigate to the file and click "download".
+2. Run `scp` or `rsync` from **your local terminal**: `scp YOURUSERNAME@submit.aci.ics.psu.edu:~/seq-workshop2021/multiqc_PRJNA486795 ~/Downloads`. This copies the file from ROAR to your local machine. *Note: if you work on Windows you will need to download a Linux subshell, so skip this step for now*
 
-# open in a web brower
-open multiqc_PRJNA486795.html
-```
+# You're done!
+Thank you for joining us today and please feel free to provide feedback or suggestions.
 
 
 
